@@ -1,7 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import axiosApi from '../../axiosApi';
 import { ApiPost } from '../../types';
-import { Box, Button, Card, CardActions, CardContent, CircularProgress, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CircularProgress,
+  Grid,
+  Typography,
+} from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 
 const initialState = {
@@ -34,24 +43,43 @@ const Post = () => {
   }, [fetchOnePost, id]);
 
   const messageDate = new Date(post.date);
-  const dformat = [messageDate.getDate(),
+  const dformat =
+    [
+      messageDate.getDate(),
       messageDate.getMonth() + 1,
-      messageDate.getFullYear()].join('.') + ' ' +
-    [messageDate.getHours(),
+      messageDate.getFullYear(),
+    ].join('.') +
+    ' ' +
+    [
+      messageDate.getHours(),
       messageDate.getMinutes(),
-      messageDate.getSeconds()].join(':');
+      messageDate.getSeconds(),
+    ].join(':');
 
   return (
     <Grid container spacing={2} direction="column" alignItems="center">
       {isLoading && (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px', width: '100%' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100px',
+            width: '100%',
+          }}
+        >
           <CircularProgress />
         </Box>
       )}
       <Grid item sx={{ width: '80%' }}>
         <Card>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div" sx={{display: 'flex'}}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={{ display: 'flex' }}
+            >
               {post.title}
               <Typography className="ms-auto">{dformat}</Typography>
             </Typography>
@@ -59,9 +87,18 @@ const Post = () => {
               {post.description}
             </Typography>
           </CardContent>
-          <CardActions sx={{display: 'flex'}}>
-            <Button size="small" component={Link} to={`/posts/${id}/edit`} className="ms-auto">Edit post</Button>
-            <Button size="small" component={Link} to={`/`}>Back</Button>
+          <CardActions sx={{ display: 'flex' }}>
+            <Button
+              size="small"
+              component={Link}
+              to={`/posts/${id}/edit`}
+              className="ms-auto"
+            >
+              Edit post
+            </Button>
+            <Button size="small" component={Link} to={`/`}>
+              Back
+            </Button>
           </CardActions>
         </Card>
       </Grid>

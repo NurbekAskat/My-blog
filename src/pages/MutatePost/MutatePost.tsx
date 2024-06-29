@@ -66,7 +66,6 @@ const MutatePost = () => {
         await axiosApi.post('/posts.json', postData);
       }
 
-
       navigate('/');
     } catch (e) {
       enqueueSnackbar({ variant: 'error', message: 'Something went wrong' });
@@ -76,9 +75,17 @@ const MutatePost = () => {
   };
 
   return (
-    <Grid container component="form" direction="column" spacing={2} onSubmit={onSubmit}>
+    <Grid
+      container
+      component="form"
+      direction="column"
+      spacing={2}
+      onSubmit={onSubmit}
+    >
       <Grid item>
-        <Typography variant="h5">{id ? 'Edit a post' : 'Create a new post'}</Typography>
+        <Typography variant="h5">
+          {id ? 'Edit a post' : 'Create a new post'}
+        </Typography>
       </Grid>
       <Grid item>
         <TextField
@@ -105,11 +112,7 @@ const MutatePost = () => {
         />
       </Grid>
       <Grid item>
-        <LoadingButton
-          loading={isLoading}
-          variant="contained"
-          type="submit"
-        >
+        <LoadingButton loading={isLoading} variant="contained" type="submit">
           Save
         </LoadingButton>
       </Grid>

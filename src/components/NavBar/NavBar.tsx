@@ -24,11 +24,23 @@ const NavBar = () => {
             Morales blog
           </Typography>
 
-
-          <Button component={NavLink} to="/" color="inherit" className="ms-auto">Home</Button>
-          <Button component={NavLink} to="/new-post" color="inherit">New post</Button>
-          <Button component={NavLink} to="/about" color="inherit">About us</Button>
-          <Button component={NavLink} to="/contacts" color="inherit">Contacts</Button>
+          <Button
+            component={NavLink}
+            to="/"
+            color="inherit"
+            className="ms-auto"
+          >
+            Home
+          </Button>
+          <Button component={NavLink} to="/new-post" color="inherit">
+            New post
+          </Button>
+          <Button component={NavLink} to="/about" color="inherit">
+            About us
+          </Button>
+          <Button component={NavLink} to="/contacts" color="inherit">
+            Contacts
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
