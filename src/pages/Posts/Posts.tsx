@@ -34,7 +34,7 @@ const Posts = () => {
   }, [fetchPosts]);
 
   return (
-    <Grid container spacing={2} direction="column" alignItems="center">
+    <Grid container spacing={2} flexWrap="wrap" justifyContent="space-around" alignItems="center">
       {isLoading && (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100px', width: '100%' }}>
           <CircularProgress />
@@ -44,19 +44,18 @@ const Posts = () => {
         <Typography variant="h2">Sorry, UwU</Typography>
       )}
       {posts.map(post => (
-        <Grid item sx={{ width: '80%' }}>
+        <Grid item sx={{ width: '50%' }}>
           <Card >
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {post.title}
+                {post.title} {post.date}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {post.description.length > 20 ? post.description.slice(0, 20) + '...' : post.description}
+                {post.description.length > 100 ? post.description.slice(0, 100) + '...' : post.description}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button size="small" component={Link} to={`/posts/${post.id}`}>Learn more</Button>
-              <Button size="small" component={Link} to={`/posts/${post.id}/edit`}>Edit post</Button>
+            <CardActions sx={{display: 'flex'}}>
+              <Button size="small" component={Link} to={`/posts/${post.id}`} className="ms-auto">Learn more</Button>
             </CardActions>
           </Card>
         </Grid>
