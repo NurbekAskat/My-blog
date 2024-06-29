@@ -71,7 +71,7 @@ const Posts = () => {
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {post.title} {post.date}
+                {post.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {post.description.length > 100
