@@ -1,21 +1,40 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Grid, TextField, Typography } from '@mui/material';
-import { PostMutation } from '../../types';
-import axiosApi from '../../axiosApi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
 import { LoadingButton } from '@mui/lab';
+import axiosApi from '../../axiosApi';
+import { ApiPost } from '../../types';
 
-const NewPost = () => {
-  const [postMutation, setPostMutation] = useState<PostMutation>({
-    title: '',
-    description: '',
-    date: '',
-  });
+const initialState = {
+  title: '',
+  description: '',
+  date: '',
+};
+
+const MutatePost = () => {
+  const [postMutation, setPostMutation] = useState<ApiPost>(initialState);
 
   const navigate = useNavigate();
-
+  const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+
+  const fetchOnePost = useCallback(async (id: string) => {
+    setIsLoading(true);
+    const response = await axiosApi.get<ApiPost | null>(`/posts/${id}.json`);
+    if (response.data) {
+      setPostMutation(response.data);
+    }
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (id !== undefined) {
+      void fetchOnePost(id);
+    } else {
+      setPostMutation(initialState);
+    }
+  }, [fetchOnePost, id]);
 
   const onFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -34,12 +53,19 @@ const NewPost = () => {
       const currentDate = new Date();
       console.log(currentDate);
 
-      const postData = {
-        ...postMutation,
-        date: currentDate,
-      };
+      if (id) {
+        const postData = {
+          ...postMutation,
+        };
+        await axiosApi.put(`/posts/${id}.json`, postData);
+      } else {
+        const postData = {
+          ...postMutation,
+          date: currentDate,
+        };
+        await axiosApi.post('/posts.json', postData);
+      }
 
-      await axiosApi.post('/posts.json', postData);
 
       navigate('/');
     } catch (e) {
@@ -52,7 +78,7 @@ const NewPost = () => {
   return (
     <Grid container component="form" direction="column" spacing={2} onSubmit={onSubmit}>
       <Grid item>
-        <Typography variant="h5">Create a new post</Typography>
+        <Typography variant="h5">{id ? 'Edit a post' : 'Create a new post'}</Typography>
       </Grid>
       <Grid item>
         <TextField
@@ -91,4 +117,4 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
+export default MutatePost;
